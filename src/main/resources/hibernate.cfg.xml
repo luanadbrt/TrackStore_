@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!--
+            ATENÇÃO: url, usuário e senha NÃO ficam aqui.
+            Este arquivo vai para o controle de versão e para o .jar entregue,
+            então credencial nele é credencial publicada.
+
+            A conexão é definida em tempo de execução pelo HibernateUtil, que lê
+            (nesta ordem):
+              1. variáveis de ambiente TRACKSTORE_DB_URL / _USER / _PASS
+              2. o arquivo db.properties na pasta do projeto (não versionado)
+            Veja db.properties.example.
+        -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+        <!-- Pool de conexões HikariCP -->
+        <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+        <property name="hibernate.hikari.minimumIdle">2</property>
+        <property name="hibernate.hikari.maximumPoolSize">10</property>
+        <property name="hibernate.hikari.idleTimeout">30000</property>
+        <property name="hibernate.hikari.poolName">TrackStorePool</property>
+
+        <!-- comandos SQL no console (útil para debug e para a apresentação) -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!--
+            'validate' (e NÃO 'update'):
+            o schema é criado por database/script.sql. O Hibernate apenas CONFERE,
+            na inicialização, se o banco bate com as entidades — e falha na hora,
+            com mensagem clara, se estiver divergente.
+
+            'update' nunca altera tipo de coluna nem corrige constraint: ele mascara
+            a divergência e o erro só aparece depois, como dado corrompido.
+        -->
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+
+        <mapping class="com.trackstore.model.Usuario"/>
+        <mapping class="com.trackstore.model.Produto"/>
+        <mapping class="com.trackstore.model.Fornecedor"/>
+        <mapping class="com.trackstore.model.Pedido"/>
+        <mapping class="com.trackstore.model.ItemPedido"/>
+        <mapping class="com.trackstore.model.Reposicao"/>
+
+    </session-factory>
+</hibernate-configuration>

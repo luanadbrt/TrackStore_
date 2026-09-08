@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <!--
+            Configuração usada SOMENTE pelos testes.
+            Banco H2 em memória: 'mvn test' roda sem precisar de um MySQL ligado, e
+            cada execução começa com o banco limpo.
+        -->
+        <property name="hibernate.connection.driver_class">org.h2.Driver</property>
+        <property name="hibernate.connection.url">jdbc:h2:mem:trackstore;DB_CLOSE_DELAY=-1</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- aqui create-drop é correto: o schema é descartável -->
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.show_sql">false</property>
+
+        <mapping class="com.trackstore.model.Usuario"/>
+        <mapping class="com.trackstore.model.Produto"/>
+        <mapping class="com.trackstore.model.Fornecedor"/>
+        <mapping class="com.trackstore.model.Pedido"/>
+        <mapping class="com.trackstore.model.ItemPedido"/>
+        <mapping class="com.trackstore.model.Reposicao"/>
+
+    </session-factory>
+</hibernate-configuration>

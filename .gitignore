@@ -1,0 +1,17 @@
+target/
+
+# credenciais do banco - nunca versionar (use db.properties.example como modelo)
+db.properties
+
+# IDEs
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+bin/
+.vscode/
+
+# sistema
+.DS_Store
+Thumbs.db
